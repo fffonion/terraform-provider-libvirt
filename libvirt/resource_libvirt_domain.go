@@ -564,7 +564,7 @@ func resourceLibvirtDomainCreate(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("error applying XSLT stylesheet: %s", err)
 	}
 
-	domain, err := virConn.DomainCreateXML(data)
+	domain, err := virConn.DomainCreateXML(data, 0)
 	if err != nil {
 		return diag.Errorf("error creating libvirt domain: %s", err)
 	}
