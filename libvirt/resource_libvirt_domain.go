@@ -564,9 +564,9 @@ func resourceLibvirtDomainCreate(ctx context.Context, d *schema.ResourceData, me
 		return diag.Errorf("error applying XSLT stylesheet: %s", err)
 	}
 
-	domain, err := virConn.DomainDefineXML(data)
+	domain, err := virConn.DomainCreateXML(data)
 	if err != nil {
-		return diag.Errorf("error defining libvirt domain: %s", err)
+		return diag.Errorf("error creating libvirt domain: %s", err)
 	}
 
 	if autostart, ok := d.GetOk("autostart"); ok {
@@ -578,11 +578,6 @@ func resourceLibvirtDomainCreate(ctx context.Context, d *schema.ResourceData, me
 		if err != nil {
 			return diag.Errorf("error setting autostart for domain: %s", err)
 		}
-	}
-
-	err = virConn.DomainCreate(domain)
-	if err != nil {
-		return diag.Errorf("error creating libvirt domain: %s", err)
 	}
 
 	id := uuidString(domain.UUID)
